@@ -7,18 +7,20 @@ using FluentAssertions;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Xunit;
+
 namespace Kevsoft.AWSXRayRecorder.Handlers.MongoDB.Tests
 {
     public class MongoDbXRayTests : ISegmentEmitter
     {
-        private List<Entity> _emittedSegments = new();
-        
+        private readonly List<Entity> _emittedSegments = new();
+
         [Fact]
         public async Task ShouldEmitMongoDBSubSegment()
         {
             Amazon.XRay.Recorder.Core.AWSXRayRecorder.InitializeInstance();
             Amazon.XRay.Recorder.Core.AWSXRayRecorder.Instance.Emitter = this;
-            var settings = XRayMongoClientSettingsConfigurator.Configure(new MongoClientSettings(), new MongoXRayOptions());
+            var settings =
+                XRayMongoClientSettingsConfigurator.Configure(new MongoClientSettings(), new MongoXRayOptions());
 
             var mongoClient = new MongoClient(settings);
 
@@ -29,7 +31,7 @@ namespace Kevsoft.AWSXRayRecorder.Handlers.MongoDB.Tests
             await collection.Find(x => true)
                 .ToListAsync();
             Amazon.XRay.Recorder.Core.AWSXRayRecorder.Instance.EndSegment();
-            
+
             _emittedSegments.Should().HaveCount(1);
             _emittedSegments[0].Subsegments.Should().HaveCount(1);
 
@@ -41,16 +43,62 @@ namespace Kevsoft.AWSXRayRecorder.Handlers.MongoDB.Tests
             subsegment.Annotations["command"].As<string>().Should().Contain("find");
             subsegment.Annotations["duration"].Should().NotBeNull();
             subsegment.Annotations["command_name"].Should().Be("find");
+            subsegment.HasFault.Should().BeFalse();
+        }
+
+        [Fact]
+        public async Task ShouldEmitMongoDBSubSegmentOnFailedCommand()
+        {
+            Amazon.XRay.Recorder.Core.AWSXRayRecorder.InitializeInstance();
+            Amazon.XRay.Recorder.Core.AWSXRayRecorder.Instance.Emitter = this;
+
+            var settings = XRayMongoClientSettingsConfigurator.Configure(new MongoClientSettings(), new MongoXRayOptions());
+
+            var mongoClient = new MongoClient(settings);
+
+            var database = mongoClient.GetDatabase("test");
+
+            Amazon.XRay.Recorder.Core.AWSXRayRecorder.Instance.BeginSegment("StartTest");
+            try
+            {
+                await database.RunCommandAsync<BsonDocument>(new BsonDocument("not-a-command", "test"));
+            }
+            catch (MongoCommandException)
+            {
+                // This will fail with "Command not-a-command failed: no such command: 'not-a-command'."
+            }
+
+            Amazon.XRay.Recorder.Core.AWSXRayRecorder.Instance.EndSegment();
+
+            _emittedSegments.Should().HaveCount(1);
+            _emittedSegments[0].Subsegments.Should().HaveCount(1);
+
+            var subsegment = _emittedSegments[0].Subsegments[0];
+            subsegment.Name.Should().Be("test@localhost:27017");
+            subsegment.Namespace.Should().Be("remote");
+            subsegment.Annotations["endpoint"].Should().Be("localhost:27017");
+            subsegment.Annotations["database"].Should().Be("test");
+            subsegment.Annotations["command"].As<string>().Should().Contain("not-a-command");
+            subsegment.Annotations["duration"].Should().NotBeNull();
+            subsegment.Annotations["command_name"].Should().Be("not-a-command");
+            subsegment.HasFault.Should().BeTrue();
+            subsegment.Cause.IsExceptionAdded.Should().BeTrue();
+            subsegment.Cause.ExceptionDescriptors.Should().HaveCount(1);
+            subsegment.Cause.ExceptionDescriptors[0].Exception.Should().NotBeNull();
 
         }
 
-        void IDisposable.Dispose() { }
+        void IDisposable.Dispose()
+        {
+        }
 
         void ISegmentEmitter.Send(Entity segment)
         {
             _emittedSegments.Add(segment);
         }
 
-        void ISegmentEmitter.SetDaemonAddress(string daemonAddress) { }
+        void ISegmentEmitter.SetDaemonAddress(string daemonAddress)
+        {
+        }
     }
 }
