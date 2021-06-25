@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# 
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B705AC45-7236-45D6-A22A-16413033B951}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kevsoft.AWSXRayRecorder.Handlers.MongoDB", "src\Kevsoft.AWSXRayRecorder.Handlers.MongoDB\Kevsoft.AWSXRayRecorder.Handlers.MongoDB.csproj", "{DF536F31-3463-48CC-B008-D3E93FF14CCF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{7E3186BD-45A2-4F65-8871-AB52E94406B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreWebAPI", "samples\AspNetCoreWebAPI\AspNetCoreWebAPI.csproj", "{3A984726-EEAA-4D8C-A7C6-589516DBAEDE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1E974B72-C1F8-4D9A-9FF1-5CA494053E7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kevsoft.AWSXRayRecorder.Handlers.MongoDB.Tests", "test\Kevsoft.AWSXRayRecorder.Handlers.MongoDB.Tests\Kevsoft.AWSXRayRecorder.Handlers.MongoDB.Tests.csproj", "{395C11E2-CA65-4739-A4F9-9533D9F94B0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF536F31-3463-48CC-B008-D3E93FF14CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF536F31-3463-48CC-B008-D3E93FF14CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF536F31-3463-48CC-B008-D3E93FF14CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF536F31-3463-48CC-B008-D3E93FF14CCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A984726-EEAA-4D8C-A7C6-589516DBAEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A984726-EEAA-4D8C-A7C6-589516DBAEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A984726-EEAA-4D8C-A7C6-589516DBAEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A984726-EEAA-4D8C-A7C6-589516DBAEDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{395C11E2-CA65-4739-A4F9-9533D9F94B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{395C11E2-CA65-4739-A4F9-9533D9F94B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{395C11E2-CA65-4739-A4F9-9533D9F94B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{395C11E2-CA65-4739-A4F9-9533D9F94B0E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DF536F31-3463-48CC-B008-D3E93FF14CCF} = {B705AC45-7236-45D6-A22A-16413033B951}
+		{3A984726-EEAA-4D8C-A7C6-589516DBAEDE} = {7E3186BD-45A2-4F65-8871-AB52E94406B8}
+		{395C11E2-CA65-4739-A4F9-9533D9F94B0E} = {1E974B72-C1F8-4D9A-9FF1-5CA494053E7F}
+	EndGlobalSection
+EndGlobal
