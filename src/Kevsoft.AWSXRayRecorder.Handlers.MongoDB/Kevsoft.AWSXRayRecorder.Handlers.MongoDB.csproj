@@ -4,6 +4,38 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Kevsoft.AWSXRayRecorder.Handlers.MongoDB</Title>
+    <AssemblyName>Kevsoft.AWSXRayRecorder.Handlers.MongoDB</AssemblyName>
+    <PackageId>Kevsoft.AWSXRayRecorder.Handlers.MongoDB</PackageId>
+    <Authors>Kevin Smith</Authors>
+    <Company>Kevsoft</Company>
+    <AssemblyTitle>Kevsoft.AWSXRayRecorder.Handlers.MongoDB</AssemblyTitle>
+    <Description>
+        This package contains libraries to trace MongoDB queries with AWS XRay.
+    </Description>
+    <Copyright>Copyright © Kevsoft 2021</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTags>XRAY;MongoDB;AWS;Tracing;AWSXRAY</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/kevbite/Kevsoft.AWSXRayRecorder.Handlers.MongoDB</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/kevbite/Kevsoft.AWSXRayRecorder.Handlers.MongoDB.git</RepositoryUrl>
+  </PropertyGroup>
+  
   <ItemGroup>
     <PackageReference Include="AWSXRayRecorder.Core" Version="2.10.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.12.4" />
