@@ -9,6 +9,9 @@ using MongoDB.Driver.Core.Events;
 
 namespace Kevsoft.AWSXRayRecorder.Handlers.MongoDB
 {
+    /// <summary>
+    /// XRay Mongo Client Settings Configurator
+    /// </summary>
     public static class XRayMongoClientSettingsConfigurator
     {
         private static readonly ConcurrentDictionary<int, CachedQuery> _queryCache =
@@ -18,6 +21,12 @@ namespace Kevsoft.AWSXRayRecorder.Handlers.MongoDB
 
         private static MongoXRayOptions _settings = new();
 
+        /// <summary>
+        /// Configures the mongo client settings to trace with XRay
+        /// </summary>
+        /// <param name="mongoDbSettings"></param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public static MongoClientSettings Configure(MongoClientSettings mongoDbSettings, MongoXRayOptions settings)
         {
             _settings = settings;

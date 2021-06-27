@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Kevsoft.AWSXRayRecorder.Handlers.MongoDB
 {
+    /// <summary>
+    /// Mongo XRay Options
+    /// </summary>
     public sealed class MongoXRayOptions
     {
         /// <summary>
