@@ -1,0 +1,43 @@
+name: Continuous Integration Workflow
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VERSION: 0.0.${{ github.run_number }}
+      RUN_DEPLOY:  ${{ github.ref == 'refs/heads/main' }}
+    services:
+      mongo:
+        image: mongo
+        ports:
+          - 27017:27017
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET 5
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release -p:Version=${{ env.VERSION }} --no-restore
+    - name: Pack
+      run: dotnet pack --configuration Release -p:Version=${{ env.VERSION }} --no-build --output ./artifacts --verbosity normal
+    - name: Test
+      run: dotnet test --configuration Release --no-build --verbosity normal
+    - name: NuGet.Org push
+      if: ${{ fromJSON(env.RUN_DEPLOY) }}
+      run: |
+        dotnet nuget push ./artifacts/*.nupkg --source NuGet.org --api-key ${{ secrets.NUGET_API_KEY }}
+    - name: Upload Release Asset
+      if: ${{ fromJSON(env.RUN_DEPLOY) }}
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.VERSION }}
+        files: |
+          ./artifacts/*.nuget
+
