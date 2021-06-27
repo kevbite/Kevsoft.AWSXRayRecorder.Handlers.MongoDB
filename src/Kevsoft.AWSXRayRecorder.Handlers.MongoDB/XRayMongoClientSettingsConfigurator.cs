@@ -25,9 +25,18 @@ namespace Kevsoft.AWSXRayRecorder.Handlers.MongoDB
         /// Configures the mongo client settings to trace with XRay
         /// </summary>
         /// <param name="mongoDbSettings"></param>
+        /// <returns></returns>
+        public static MongoClientSettings ConfigureXRay(this MongoClientSettings mongoDbSettings)
+        {
+            return ConfigureXRay(mongoDbSettings, new MongoXRayOptions());
+        }
+        /// <summary>
+        /// Configures the mongo client settings to trace with XRay
+        /// </summary>
+        /// <param name="mongoDbSettings"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public static MongoClientSettings Configure(MongoClientSettings mongoDbSettings, MongoXRayOptions settings)
+        public static MongoClientSettings ConfigureXRay(this MongoClientSettings mongoDbSettings, MongoXRayOptions settings)
         {
             _settings = settings;
             _nextPruneTimeTicks = DateTime.UtcNow.Add(_settings.MaxQueryTime).Ticks;

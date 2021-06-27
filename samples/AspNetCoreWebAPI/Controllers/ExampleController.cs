@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Kevsoft.AWSXRayRecorder.Handlers.MongoDB;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -14,7 +14,7 @@ namespace AspNetCoreWebAPI.Controllers
         [HttpGet]
         public async Task<string> Get()
         {
-            var settings = XRayMongoClientSettingsConfigurator.Configure(new MongoClientSettings { }, new MongoXRayOptions());
+            var settings = XRayMongoClientSettingsConfigurator.ConfigureXRay(new MongoClientSettings { }, new MongoXRayOptions());
 
             var mongoClient = new MongoClient(settings);
 

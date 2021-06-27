@@ -19,9 +19,8 @@ namespace Kevsoft.AWSXRayRecorder.Handlers.MongoDB.Tests
         {
             Amazon.XRay.Recorder.Core.AWSXRayRecorder.InitializeInstance();
             Amazon.XRay.Recorder.Core.AWSXRayRecorder.Instance.Emitter = this;
-            var settings =
-                XRayMongoClientSettingsConfigurator.Configure(new MongoClientSettings(), new MongoXRayOptions());
 
+            var settings = new MongoClientSettings().ConfigureXRay();
             var mongoClient = new MongoClient(settings);
 
             var database = mongoClient.GetDatabase("test");
@@ -52,7 +51,7 @@ namespace Kevsoft.AWSXRayRecorder.Handlers.MongoDB.Tests
             Amazon.XRay.Recorder.Core.AWSXRayRecorder.InitializeInstance();
             Amazon.XRay.Recorder.Core.AWSXRayRecorder.Instance.Emitter = this;
 
-            var settings = XRayMongoClientSettingsConfigurator.Configure(new MongoClientSettings(), new MongoXRayOptions());
+            var settings = new MongoClientSettings().ConfigureXRay();
 
             var mongoClient = new MongoClient(settings);
 
